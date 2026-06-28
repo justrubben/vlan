@@ -1,0 +1,96 @@
+#create vlan on raspberry pi running as router
+
+#install switch on usb port with usb to ethernet  donggle
+
+#verify kernel supports vlan
+ lsmod | grep 8021q
+
+#output should be similar
+ 8021q
+ garp
+ mrp
+
+#make it load automatically
+ echo 8021q | sudo tee -a /etc/modules
+
+#create vlan network interfaces with either systemd-networkd or networkmanager (this example with networkmanager)
+ sudo nmcli connection add type vlan \con-name vlan10 \dev eth1 \id 10 \ifname eth1.10
+ sudo nmcli connection add type vlan \con-name vlan20 \dev eth1 \id 20 \ifname eth1.20
+ sudo nmcli connection add type vlan \con-name vlan30 \dev eth1 \id 30 \ifname eth1.30
+
+#assign IP addresses
+ sudo nmcli connection modify vlan10 \ipv4.addresses 192.168.10.1/24 \ipv4.method manual
+ sudo nmcli connection modify vlan20 \ipv4.addresses 192.168.20.1/24 \ipv4.method manual
+ sudo nmcli connection modify vlan30 \ipv4.addresses 192.168.30.1/24 \ipv4.method manual
+
+#bring up interfaces
+ sudo nmcli connection up vlan10
+ sudo nmcli connection up vlan20
+ sudo nmcli connection up vlan30
+
+#setup dhcp and dns with dnsmasq
+ sudo nano /etc/dnsmasq.conf
+
+#add:
+ #vlan
+  interface=eth1.10
+  interface=eth1.20
+  interface=eth1.30
+
+ #Vlan dhcp range
+  dhcp-range=eth1.10,192.168.10.100,192.168.10.200,255.255.255.0,24h
+  dhcp-range=eth1.20,192.168.20.100,192.168.20.200,255.255.255.0,24h
+  dhcp-range=eth1.30,192.168.30.100,192.168.30.200,255.255.255.0,24h
+
+ #Vlan gateway 
+  dhcp-option=eth1.10,3,192.168.10.1
+  dhcp-option=eth1.20,3,192.168.20.1
+  dhcp-option=eth1.30,3,192.168.30.1
+
+#restart dnsmasq    
+ sudo systemctl restart dnsmasq
+
+#verify its working
+ journalctl -u dnsmasq -f
+
+#output should be
+ DHCPDISCOVER(eth1.10)
+ DHCPOFFER(eth1.10)
+ DHCPACK(eth1.10)
+
+#configure NAT firewall rules with iptables
+ sudo iptables -A FORWARD -i eth1.10 -o eth0 -j ACCEPT
+ sudo iptables -A FORWARD -i eth1.20 -o eth0 -j ACCEPT
+ sudo iptables -A FORWARD -i eth1.30 -o eth0 -j ACCEPT
+ sudo iptables -A FORWARD -i eth0 -o eth1.10 -m state --state ESTABLISHED,RELATED -j ACCEPT
+ sudo iptables -A FORWARD -i eth0 -o eth1.20 -m state --state ESTABLISHED,RELATED -j ACCEPT
+ sudo iptables -A FORWARD -i eth0 -o eth1.30 -m state --state ESTABLISHED,RELATED -j ACCEPT 
+
+#permanently save iptable rules
+ sudo netfilter-persistent save
+
+
+
+#configure managed switch 
+
+#configure AP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
