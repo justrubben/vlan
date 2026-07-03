@@ -29,4 +29,6 @@ example: vlan id 1 u, u, u, u, u
 
 #click "apply"
 
-#leave "port PVID" alone unless the remaining ports are being used
+#look and click on "port PVID" and select port 2
+
+#type under pvid type 10 and click "apply"
