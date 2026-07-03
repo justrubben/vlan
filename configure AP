@@ -1,0 +1,18 @@
+#plug in AP to network (router via ethernet) and the pc configuring AP must be in the same network
+
+#download and open AP server app
+
+#adopt new device
+
+#find and click settings
+
+#find and click "networks"
+
+#find and click "create new"
+
+#type vlan name and vlan id for each vlan created (must match vlan id created on pi)
+example: vlan id 10, 20, 30
+  
+#look and click on "wifi"
+
+#look and click on "create new" this will allow you so set up vlan wifi name, password, ect for each vlan
