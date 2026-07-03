@@ -1,0 +1,32 @@
+#plug swaitch to PC vie ethernet
+
+#set static IP for ethernet adapter to the same subnet as switch
+
+#open internet browser browser and type switch's IP to access config interface
+
+#login with default credentials located on switch or with personal credentials
+
+#locate "VLAN options" and select it
+
+#locate "802.1q vlan" and click it
+
+#click "advanced options" and enable it
+
+#click on "VLAN configurations"
+
+#select "VLAN ID" and type vlan id
+example: vlan id 10, 20, 30
+
+#click "add" for each vlan id created
+
+#click "VLAN membership"
+
+#tag and untag ports on each vlan id depending if port on switch is being used
+example: vlan id 1 u, u, u, u, u 
+         vlan id 10 t, t, u, u, u
+         vlan id 29 t, t, u, u, u
+         vlan id 30 t, t, u, u, u
+
+#click "apply"
+
+#leave "port PVID" alone unless the remaining ports are being used
