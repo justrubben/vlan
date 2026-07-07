@@ -47,6 +47,11 @@
   dhcp-option=eth1.20,3,192.168.20.1
   dhcp-option=eth1.30,3,192.168.30.1
 
+#set dns to each vlan
+ dhcp-option=eth1.10,6,8.8.8.8,1.1.1.1
+ dhcp-option=eth1.20,6,8.8.8.8,1.1.1.1
+ dhcp-option=eth1.30,6,8.8.8.8,1.1.1.1
+
 #restart dnsmasq    
  sudo systemctl restart dnsmasq
 
