@@ -23,9 +23,9 @@ example: vlan id 10, 20, 30
 
 #tag and untag ports on each vlan id depending if port on switch is being used
 example: vlan id 1 u, u, u, u, u 
-         vlan id 10 t, t, u, u, u
-         vlan id 29 t, t, u, u, u
-         vlan id 30 t, t, u, u, u
+         vlan id 10 t, u, , , 
+         vlan id 29 t, t, , , 
+         vlan id 30 t, t, , , 
 
 #click "apply"
 
