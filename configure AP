@@ -1,6 +1,9 @@
 #plug in AP to network (router via ethernet) and the pc configuring AP must be in the same network
 
-#download and open AP server app
+#download unifi server through terminal
+
+#open broweser and type (replace ip with raspberry pi vlan /vlan default gateway)
+https://192.168.10.1:8443
 
 #adopt new device
 
