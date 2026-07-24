@@ -52,6 +52,14 @@
  dhcp-option=eth1.20,6,8.8.8.8,1.1.1.1
  dhcp-option=eth1.30,6,8.8.8.8,1.1.1.1
 
+# Only listen on these VLAN interfaces
+ interface=eth1.10
+ interface=eth1.20
+ interface=eth1.30
+
+# Bind only to the interfaces above
+ bind-interfaces
+
 #restart dnsmasq    
  sudo systemctl restart dnsmasq
 
@@ -71,8 +79,17 @@
  sudo iptables -A FORWARD -i eth0 -o eth1.20 -m state --state ESTABLISHED,RELATED -j ACCEPT
  sudo iptables -A FORWARD -i eth0 -o eth1.30 -m state --state ESTABLISHED,RELATED -j ACCEPT 
 
+#add NAT masquerade
+
+#enable ip forwarding 
+
 #permanently save iptable rules
  sudo netfilter-persistent save
+
+#bring up VLAN interfaces automatically.
+ sudo nmcli connection modify vlan10 connection.autoconnect yes
+ sudo nmcli connection modify vlan20 connection.autoconnect yes
+ sudo nmcli connection modify vlan30 connection.autoconnect yes
 
 
 
