@@ -82,6 +82,7 @@
  sudo iptables -A FORWARD -i eth0 -o eth1.30 -m state --state ESTABLISHED,RELATED -j ACCEPT 
 
 #add NAT masquerade
+ sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 
 #enable ip forwarding 
 
