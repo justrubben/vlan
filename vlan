@@ -57,8 +57,10 @@
  interface=eth1.20
  interface=eth1.30
 
-# Bind only to the interfaces above
- bind-interfaces
+# Bind only to the interfaces above within dnsmasq.conf
+  bind-interfaces
+
+#exit dnsmasq.conf
 
 #restart dnsmasq    
  sudo systemctl restart dnsmasq
