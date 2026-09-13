@@ -10,7 +10,7 @@
  garp
  mrp
 
-#make it load automatically
+#add the module to the kernel and make it load automatically
  echo 8021q | sudo tee -a /etc/modules
 
 #create vlan network interfaces with either systemd-networkd or networkmanager (this example with networkmanager)
